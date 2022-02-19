@@ -1,12 +1,14 @@
-<?php
-    include "header.php";
-?>
+
         <div class="faq-banner-img ">
             <img src="assets/images/faq-banner.png " alt=" ">
         </div>
    
     </section>
 
+    <!--********* Faq banner Section end************-->
+
+
+    <!--********* Faq main or for customer tab/Section start************-->
     <section>
         <div class="container faqs-main">
             <h3 class="faq-heading ">FAQs</h3>
@@ -188,7 +190,10 @@
                             </div>
                         </div>
                     </div>
-                    
+                    <!--********* Faq main or for customer tab/Section end************-->
+
+
+                    <!--********* Faq main or for service provider tab/Section start************-->
                     <div class="tab-pane fade" id="for-sp" role="tabpanel" aria-labelledby="sp-tab">
                         <div id="accordion">
                             <div class="card faq-cards">
@@ -347,12 +352,15 @@
                             </div>
                         </div>
                     </div>
+                    <!--********* Faq main or for service provider tab/Section end************-->
 
                 </div>
             </div>
         </div>
     </section>
-    
+    <!--********* Faq main Section end************-->
+
+    <!--********* Faq newsletter section start************-->
     <section>
         <div class="container faq-newsletter">
             <div class="newsletter-input">
@@ -367,6 +375,7 @@
             </div>
         </div>
     </section>
+    <!--********* Faq newsletter section end************-->
 
 
 
