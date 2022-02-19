@@ -1,3 +1,17 @@
+<?php
+session_start();
+if (isset($_COOKIE['siteCookie'])) {
+    echo "<style>
+        .privacy-policy-sec{
+            display:none !important;
+        }
+    </style>";
+} else if (isset($_POST['submit-cookie'])) {
+    setcookie("siteCookie", "Helperland", time() + 60 * 60 * 24 * 30);
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,25 +21,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Homepage</title>
     <style>
-    <?php
+        <?php
         include 'assets/css/style.css';
         include 'assets/css/responsive.css';
-        
-    ?>
+
+        ?>
     </style>
-    
-    
+
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.js" type="text/javascript"></script>
 
 
 </head>
 
 <body>
+    <!--********* Main Screen Banner Section start************-->
     <section class="main-screen" id="main-screen">
         <header>
             <nav class="navbar navbar-expand-lg fixed-top " id="navbar">
@@ -35,53 +51,172 @@
                 </button>
                 <div class="collapse navbar-collapse text-center" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto">
-                        <li class=" nav-item rounded-btn">
-                            <a class="nav-link active " aria-current="page " href="book-service.php" target="_blank">Book a Cleaner</a>
-                        </li>
-                        <li class="nav-item ">
-                            <a class="nav-link " href="<?php echo $arr['base_url'].'?controller=home&function=prices';?>" target="_blank">Prices</a>
-                        </li>
-                        <li class="nav-item ">
-                            <a class="nav-link " href="#">Our Guarantee</a>
-                        </li>
-                        <li class="nav-item ">
-                            <a class="nav-link " href="#">Blog</a>
-                        </li>
-                        <li class="nav-item ">
-                            <a class="nav-link " href="<?php echo $arr['base_url'].'?controller=home&function=contact';?>" target="_blank">Contact us</a>
-                        </li>
-                        <li class="nav-item login-rounded-btn">
-                            <a class="nav-link " href="#" data-toggle="modal" data-target="#login-modal">Login</a>
-                        </li>
-                        <li class="nav-item rounded-btn">
-                            <a class="nav-link " href="<?php echo $arr['base_url'].'?controller=home&function=sp-reg'?>" target="_blank">Become a Helper</a>
-                        </li>
-                        <li class="dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink " role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img src="assets/images/flag.png" alt="">
-                            </a>
-                            <div class="dropdown-menu dropdown-content" aria-labelledby="navbarDropdownMenuLink ">
-                                <a class="dropdown-item" href="#">India</a>
-                                <a class="dropdown-item" href="#">Bangladesh</a>
-                                <a class="dropdown-item" href="#">France</a>
-                            </div>
-                        </li>
+                        <?php if (isset($_SESSION['islogin']) && isset($_SESSION['expire']) && isset($_SESSION['userType'])) {
+                            if ($_SESSION['userType'] == 1) {
+                                $now = time();
+                                if ($now > $_SESSION['expire']) {
+                                    echo "<script>alert('Session is expired');</script>";
+                                    unset($_SESSION['islogin']);
+                                    echo "<script>window.location.href='$arr[base_url]';</script>";
+                                }
 
+
+                        ?>
+                                <li class=" nav-item rounded-btn">
+                                    <a class="nav-link active " aria-current="page " href="<?php echo $arr['base_url'] . '?controller=home&function=bookService'; ?>" target="blank">Book a Cleaner</a>
+                                </li>
+                                <li class="nav-item ">
+                                    <a class="nav-link " href="<?php echo $arr['base_url'] . '?controller=home&function=prices'; ?>" target="blank">Prices</a>
+                                </li>
+                                <li class="nav-item ">
+                                    <a class="nav-link " href="# ">Our Guarantee</a>
+                                </li>
+                                <li class="nav-item ">
+                                    <a class="nav-link " href="# ">Blog</a>
+                                </li>
+                                <li class="nav-item ">
+                                    <a class="nav-link " href="<?php echo $arr['base_url'] . '?controller=home&function=contact'; ?>" target="blank">Contact us</a>
+                                </li>
+                                <div class="noti-user-icons" id="user-icon">
+                                    <li class="nav-item notification-icon d-flex">
+                                        <span id="notification-count">2</span>
+                                        <a class="nav-link" href="#"><img src="assets/images/icon-notification.png" alt=""></a>
+                                    </li>
+                                    <div class="dropdown user-icon d-flex align-items-center">
+                                        <button class="dropdown-toggle d-flex align-items-center" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <a class="nav-link" href="#"><img src="assets/images/user.png" alt=""></a>
+                                            <a class="nav-link" href="#"><img src="assets/images/sp-arrow-down.png" alt="" class="sp-down-arrow"></a>
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <div class="username">
+                                                <p>Welcome, <b><?php echo $_SESSION['userName']; ?></b></p>
+                                            </div>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" id="v-pills-dashboard-tab" href="#v-pills-dashboard" data-toggle="pill" role="tab" aria-labelledby="v-pills-dashboard" onclick="removeActive(event)">My Dashborad</a>
+
+                                            <a class="dropdown-item" id="pills-settings-tab" data-toggle="pill" href="#v-pills-my-setting" role="tab" aria-controls="v-pills-my-setting-tab" aria-selected="false" onclick="removeActive(event)">My Setting</a>
+                                            <a class="dropdown-item" data-toggle="modal" data-target="#logout-modal" id="btn-logout">Logout</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php } else if ($_SESSION['userType'] == 2) { ?>
+                                <li class="nav-item ">
+                                    <a class="nav-link " href="<?php echo $arr['base_url'] . '?controller=home&function=prices'; ?>" target="blank">Prices</a>
+                                </li>
+                                <li class="nav-item ">
+                                    <a class="nav-link " href="# ">Our Guarantee</a>
+                                </li>
+                                <li class="nav-item ">
+                                    <a class="nav-link " href="# ">Blog</a>
+                                </li>
+                                <li class="nav-item ">
+                                    <a class="nav-link " href="<?php echo $arr['base_url'] . '?controller=home&function=contact'; ?>" target="blank">Contact us</a>
+                                </li>
+                                <div class="noti-user-icons" id="user-icon">
+                                    <li class="nav-item notification-icon d-flex">
+                                        <span id="notification-count">2</span>
+                                        <a class="nav-link" href="#"><img src="assets/images/icon-notification.png" alt=""></a>
+                                    </li>
+                                    <div class="dropdown user-icon d-flex align-items-center">
+                                        <button class="dropdown-toggle d-flex align-items-center" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <a class="nav-link" href="#"><img src="assets/images/user.png" alt=""></a>
+                                            <a class="nav-link" href="#"><img src="assets/images/sp-arrow-down.png" alt="" class="sp-down-arrow"></a>
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <div class="username">
+                                                <p>Welcome, <b><?php echo $_SESSION['userName']; ?></b></p>
+                                            </div>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" id="v-pills-dashboard-tab" href="#v-pills-dashboard" data-toggle="pill" role="tab" aria-labelledby="v-pills-dashboard" onclick="removeActive(event)">My Dashborad</a>
+
+                                            <a class="dropdown-item" id="pills-settings-tab" data-toggle="pill" href="#v-pills-my-setting" role="tab" aria-controls="v-pills-my-setting-tab" aria-selected="false" onclick="removeActive(event)">My Setting</a>
+                                            <a class="dropdown-item" data-toggle="modal" data-target="#logout-modal" id="btn-logout">Logout</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php }
+                        } else { ?>
+                            <li class=" nav-item rounded-btn">
+                                <a class="nav-link active " aria-current="page" data-toggle="modal" data-target="#login-modal" target="blank">Book a Cleaner</a>
+                            </li>
+                            <li class="nav-item ">
+                                <a class="nav-link " href="<?php echo $arr['base_url'] . '?controller=home&function=prices'; ?>" target="blank">Prices</a>
+                            </li>
+                            <li class="nav-item ">
+                                <a class="nav-link " href="# ">Our Guarantee</a>
+                            </li>
+                            <li class="nav-item ">
+                                <a class="nav-link " href="# ">Blog</a>
+                            </li>
+                            <li class="nav-item ">
+                                <a class="nav-link " href="<?php echo $arr['base_url'] . '?controller=home&function=contact'; ?>" target="blank">Contact us</a>
+                            </li>
+                            <li class="nav-item login-rounded-btn btn-hide">
+                                <a class="nav-link " href="#" data-toggle="modal" data-target="#login-modal">Login</a>
+                            </li>
+                            <li class="nav-item rounded-btn btn-hide">
+                                <a class="nav-link " href="<?php echo $arr['base_url'] . '?controller=home&function=spReg'; ?>" target="blank">Become a Helper</a>
+                            </li>
+                            <li class="dropdown" id="dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <img src="assets/images/flag.png" alt="">
+                                </a>
+                                <div class="dropdown-menu dropdown-content" aria-labelledby="navbarDropdownMenuLink ">
+                                    <a class="dropdown-item" href="#">India</a>
+                                    <a class="dropdown-item" href="#">Bangladesh</a>
+                                    <a class="dropdown-item" href="#">France</a>
+                                </div>
+                            </li>
+                        <?php } ?>
                     </ul>
                 </div>
             </nav>
+
+            <div class="modal fade logout-modal" id="logout-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle2" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="logout-modal-content">
+                                <div class="logout-green-circle">
+                                    <img src="assets/images/ic-check.png" alt="">
+                                </div>
+                                <h5>You have successfully logged out</h5>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn-logout-ok" data-dismiss="modal" id="btn-logout">Ok</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </header>
-
-
+        <!--********* Main Screen Banner Section start************-->
         <div class="main-text ">
             <h1>Lorem ipsum text</h1>
             <p class="sub-text mb-0 "><img src="assets/images/forma-1-copy-10.svg " alt=" "></i>Lorem ipsum dolor sit amet consectetur adipisicing</p>
             <p class="sub-text mb-0 "><img src="assets/images/forma-1-copy-10.svg " alt=" "></i>Lorem ipsum dolor sit amet consectetur adipisicing</p>
             <p class="sub-text mb-0 ">
-                <img src="assets/images/forma-1-copy-10.svg " alt=" "></i>Lorem ipsum dolor sit amet consectetur adipisicing</p>
+                <img src="assets/images/forma-1-copy-10.svg " alt=" "></i>Lorem ipsum dolor sit amet consectetur adipisicing
+            </p>
         </div>
         <div class="banner-btn">
-            <button type="button " class="mainscreen-btn" onclick='window.location.href="book-service.php"'>Let's Book a Cleaner</button>
+
+            <?php if (isset($_SESSION['islogin']) && isset($_SESSION['expire']) && isset($_SESSION['userType'])) {
+                $now = time();
+                if ($now > $_SESSION['expire']) {
+                    echo "<script>alert('Session is expired');</script>";
+                    unset($_SESSION['islogin']);
+                    echo "<script>window.location.href='$arr[base_url]';</script>";
+                }
+
+                if ($_SESSION['userType'] == 1) {
+            ?>
+                    <button type="button " class="mainscreen-btn" onclick=window.location.href="<?php echo $arr['base_url'] . '?controller=home&function=bookService'; ?>">Let's Book a Cleaner</button>
+                <?php } else if ($_SESSION['userType'] == 2) { ?>
+                <?php }
+            } else { ?>
+                <button type="button" class="mainscreen-btn" data-toggle="modal" data-target="#login-modal">Let's Book a Cleaner</button>
+            <?php } ?>
         </div>
 
 
@@ -92,21 +227,21 @@
                     <img src="assets/images/forma-1-copy.svg " alt=" ">
                     <p class="sub-text mt-4 ">Enter your postcode</p>
                 </div>
-                <!-- <img src="assets/images/step-arrow-1.png " alt=" " class="curvearrow"> -->
+                <img src="assets/images/step-arrow-1.png " alt=" " class="curvearrow">
 
                 <div class="svgs col-md-3">
                     <img src="assets/images/group-22.png " alt=" ">
                     <p class="sub-text mt-4 ">Select your plan</p>
                 </div>
 
-                <!-- <img src="assets/images/step-arrow-1-copy.png " alt=" " class="curvearrow"> -->
+                <img src="assets/images/step-arrow-1-copy.png " alt=" " class="curvearrow">
 
                 <div class="svgs col-md-3">
                     <img src="assets/images/forma-1.svg " alt=" ">
                     <p class="sub-text mt-4 ">Pay securely online</p>
                 </div>
 
-                <!-- <img src="assets/images/step-arrow-1.png " alt=" " class="curvearrow"> -->
+                <img src="assets/images/step-arrow-1.png " alt=" " class="curvearrow">
 
                 <div class="svgs col-md-3">
                     <img src="assets/images/forma-1 (1).svg " alt=" ">
@@ -122,11 +257,18 @@
             </div>
         </div>
 
-        <!-- login model -->
+        <!--  Homepage modal for login start -->
         <?php
-            include 'views/sign_in-model/login-modal.php'
+        include 'popup-modal/login-modal.php';
+        include 'popup-modal/logout-modal.php';
         ?>
+        <!--  Homepage modal for forget-pass end -->
     </section>
+    <!--********* Main Screen Banner Section end************-->
+
+
+
+    <!--********* Features Section start************-->
 
     <section class="section-feature" id="feature-section">
         <div class="container">
@@ -158,6 +300,10 @@
             </div>
         </div>
     </section>
+    <!--********* Features Section end************-->
+
+
+    <!--********* Blog Section start************-->
 
     <section class="third-sec blog-section">
         <div class="container-fluid ">
@@ -233,6 +379,11 @@
             </div>
         </div>
     </section>
+
+    <!--********* Blog Section end************-->
+
+
+    <!--********* Community Section start************-->
 
     <div class="container-fluid community-sec ">
 
@@ -328,7 +479,9 @@
             </div>
         </div>
     </div>
+    <!--********* Community Section end************-->
 
+    <!--********* Footer Section start************-->
     <div class="container-fluid footer-section ">
         <footer>
             <div class="footer-content">
@@ -352,13 +505,17 @@
 
     <div class="container-fluid privacy-policy-sec">
         <p class="text-center">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ea iste pariatur cumque. <span style="color:#6EABEF; ">Privacy Policy</span></p>
-        <button type="button" class="btn-ok" id="privacy-policy-accept" onclick="privacy_policy_btn()">OK!</button>
+        <form action="" method="post">
+            <button type="submit" class="btn-ok" id="privacy-policy-accept" name="submit-cookie" onclick="privacy_policy_btn()">OK!</button>
+        </form>
+
     </div>
 
+    <!--********* Footer Section end ************-->
 
-    <script src="assets/js/main.js" type ="text/javascript"></script>
+    <script src="assets/js/main.js" type="text/javascript"></script>
     <script src=" https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js "></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js "></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js "></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js "></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js "></script>
