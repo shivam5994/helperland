@@ -6,7 +6,10 @@
         </div>
 
     </section>
-    
+    <!--********* prices banner section end************-->
+
+
+    <!--********* prices main section start************-->
     <section>
         <div class="container prices">
             <h3 class="faq-heading ">Prices</h3>
@@ -41,7 +44,11 @@
 
     </section>
 
+    <!--********* prices main section end************-->
 
+  
+
+    <!--********* prices extra service section start************-->
     <section>
         <div class="container extra-services">
             <h3 class="faq-heading ">Extra services</h3>
@@ -81,7 +88,10 @@
             </div>
         </div>
     </section>
-   
+    <!--********* prices extra service section end************-->
+
+
+    <!--********* prices cleaning section section start************-->
     <section>
         <div class="container-fluid cleaning-section">
             <h3 class="faq-heading">What we include in cleaning</h3>
@@ -172,7 +182,10 @@
             </div>
         </div>
     </section>
-  
+    <!--********* prices cleaning section section end************-->
+
+
+    <!--********* prices why helperland section start************-->
     <section>
         <div class="container why-helperland">
             <h3 class="faq-heading">Why Helperland</h3>
@@ -215,7 +228,7 @@
         </div>
     </section>
 
-
+    <!--********* prices why helperland section end************-->
 
 
 
