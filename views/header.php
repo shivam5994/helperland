@@ -99,7 +99,8 @@ session_start();
                                                 <p>Welcome, <b><?php echo $_SESSION['userName']; ?></b></p>
                                             </div>
                                             <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" id="v-pills-dashboard-tab">My Dashborad</a>
+                                            <!-- <a class="dropdown-item" id="v-pills-dashboard-tab">My Dashborad</a> -->
+                                            <a class="dropdown-item" href="<?php echo $arr['base_url'] . '?controller=home&function=customerDashboard'; ?>" onclick="removeActive(event)">My Dashboard</a>
 
                                             <a class="dropdown-item" id="pills-settings-tab" data-toggle="pill" href="#v-pills-my-setting" role="tab" aria-controls="v-pills-my-setting-tab" aria-selected="false" >My Setting</a>
                                             <a class="dropdown-item" href="index.html" data-toggle="modal" data-target="#logout-modal">Logout</a>
