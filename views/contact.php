@@ -120,7 +120,7 @@
 
 <section class="map">
     <div class="googleMap">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d80662.4942729429!2d7.076017238758908!3d50.81814219143823!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1644903952282!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+         <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d1672484.2526690692!2d69.77886730212398!3d22.373752732655433!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1646637315501!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
     </div>
 </section>
 <!--********* contact get-in-touch section end************-->
